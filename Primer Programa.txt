@@ -1,0 +1,863 @@
+-Java 11
+-NetBeans 14
+-Dockers
+-GitHub
+-Java 11
+-Sonar 
+-Maven
+
+
+<Classe del dia 08/02/23>
+
+
+
+Creamos una BD llamada "ejemplo"
+
+**Tabla empleados 
+** Vlores:
+
+*clave vc
+*nombre vc 
+*direccion vc
+*telefono vc
+
+Vamos a crear un proyecto llamado -Programa 01-
+Es JavaAplication 
+
+Pograma llamado "Programa 01"
+
+1.- Se necesita una conexion a BD enlacada a main()
+
+
+
+----------------------Clase del dia 10/02/23-----------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Creamos un java aplication con maven 
+
+Estamos trabajando con un gestor de dependencia maven 
+
+
+*Release
+*Milestone
+*Snapshop
+
+
+1.- Creamos un proyecto llamado "Programa#1"
+2.- Empaquetado en el orguv
+*El netbeans ya tiene agregado el sonar*
+3.- En Maven repositorio podemos buscar cualquier biblioteca pero buscamos el de postgres porque vamos a estar enlasados en el mismo
+4.- Vamos a descargar 42.4.3 de pendiendo el postgres que vamos a ocupar(Estamos trabajando con deploy que es un despliegue).
+5.- El codigo que aparece ahi es lo que se va a colocar en el fondo de dependencias lo copia, lo pasa, click izquierdo y le da formato 
+5.- Se queda en el repositorio maven, .m2 <- aqui es donde se esta guardando el repositorio local, este se concecta generalmente a maven pero en una empresa se utiliza
+nexus que sera local o privado y ese se estara conectando al repository o al ambiente local, para que me sirve nexus(Es un servidor de dependencias y sirve
+guardar dependencias). PARA ESTO SE OCUPA MAVEN
+6.- 	Nos conectamos a una base de datos 
+
+
+7.- Hcemos el codigo y despues lo limpiamos en el sonar y despues lo pasamos a nuestro repositorio 
+8.- 
+
+
+
+
+public class Programa {
+
+	public static void main(String[] args){
+	String url="jdc;postgresql://localhost:***/ejemplo";
+	String pwd="postgres";
+	String user="postgres";
+ 	Connection con=DriverManager.getConnection(url, user,ped);
+	Logger.getLogger(Programa1.class.getName()).long(level.INFO, "Se conecto...");
+{ catch (SQLExeption ex){
+	Logger-getLogger(Programa1.class.getName()).log(Level.SEVERE, null, ex);
+}
+finally{
+	try{
+	if (con!=null){
+		try {
+			con.close();
+		}catch (SQLException ex){
+			Logger.getLogger(Programa1_2.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+	 }
+   }
+}
+
+
+
+
+
+
+*****Click con boton derecho y le doy a analizar y que lo analice con sonar = dice que tiene los 4 issues, lo vamos a corregir = quitamos el "System.out" 
+para mandarlo a logger,(Hay que quitarle el smellcode a nuestro codigo)
+
+*****try es prueba y el catch donde cachamos el error y finaly para cerrar los procesos, 
+
+
+
+----------------------Clase del dia 13/02/23-----------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+public class Programa {
+
+	public static void main(String[] args){
+		Connection con=null;
+	try	{
+		String sql="Insert ejemplo (clave, nombre, direccion, telefono) values"
+		+ " ('')
+	String url="jdc;postgresql://localhost:***/ejemplo";
+	String pwd="postgres";
+	String user="postgres";
+ 	Connection con=DriverManager.getConnection(url, user,ped);
+	Logger.getLogger(Programa1.class.getName()).long(level.INFO, "Se conecto...");
+	Statement st=con.createStatement();
+	st.execute(sql);
+	Logger.getLogger(Programa1.class.getName()).long(level.INFO, "Se Guardo...");
+
+
+
+
+{ catch (SQLExeption ex){
+	Logger-getLogger(Programa1.class.getName()).log(Level.SEVERE, null, ex);
+}
+finally{
+	try{
+	if (con!=null){
+			st.close();
+		}catch (SQLException ex){
+			Logger.getLogger(Programa1_2.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	try{
+	if (con!=null){
+			st.close();
+		}catch (SQLException ex){
+			Logger.getLogger(Programa1_2.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	
+
+		}
+	 }
+   }
+}
+
+
+****** Dockerizado el postgres en el puerto 700, creamos una tabla llamada "ejemplo", 
+si se corre debe decir que "Se guardo"
+Este sale mediante el Logger ******
+
+
+****** Los Statement son pecado por la inyeccion, 
+me pueden Hackear por la inyeccion de SQL es la linea 31
+se debe de hacer un createStatement o tener una capa de datos tipo Hibernet o JPA ******
+
+
+++++ Creamos un repositorio en gitHub "Programa 1"++++
+
+++++ Se genera nuestro respectivo token que no se acabe (Un token para NetBeans) ++++
+
+++++ Se le da pribilegios al token del repositorio ++++
+
+
+---- El "programa 1" en versioning, en "Inicialice GitHub", le da ok y debe de aparecer en verde = Significa que tienen trabajado su codigo local y tiene su 
+repositorio local ----
+
+---- Click boton derecho, seleccionamos git y le damos commit local, en el mensaje de commit se le pone inicializacion -----
+
+---- Si se agrega otra cosa se ponen en verde eso quiere decir que ya se puede estar modificando ----
+
+---- en el git le damos en el remote y le damos despues un push, en el URL le damos el URL de nuestro gitHub, se pone la sesion y 
+el password con el que entramos a nuestro gitHub ----
+
+---- Va a ir de rama de master a master, le damos next y finish ----
+
+----  
+---- 
+----  
+---- 
+----  
+---- 
+----  
+---- 
+
+*Singleton
+*DAO--->pojo--->DTO
+
+
+
+
+[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[ Creamos otro programa llamadi "Programa 02" ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+^^^^^^^^ Hacemos nuestro singleton (Esto es un ejemplo de patron SINGLETON) ^^^^^^^^ 
+
+
+Este solo tiene un funcionalidad que es imprimir 
+
+public classs Programa02 {
+
+	private static Singleton s=null;
+	public static Singleton get Instance(){
+	if (s==null)
+		s=new Singleton();
+	return s;	
+	}	
+
+	private Singleton(){
+	}
+
+	public void imprimir(){
+
+	Logger.getLogger(Programa02.class.getName()).log(Level.INFO,"Hola...");
+	}
+
+}
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+public class Programa02{
+
+	public static void main(String [] args) {
+	//Singleton singleton=new Singleton();
+	Songleton singleton=Singleton.getInstance();
+	singleton.imprimir();
+	}
+}
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~   Ejemplo DAO  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+public class ClaseConcreta {
+	public void imprimir(){
+	System.out.printLn(Hola mundo...);
+	}
+}
+
+\\\\\\\\\\\\\\\\\\\\\\ La clase A va a ser la base abstracta \\\\\\\\\\\\\\\\\\\\\\
+
+public abstract class ClaseA {
+	public void imprimir(){
+		msg();
+	}
+	public abstract void msg();
+} 
+
+
+
+°°°°°°°°° Yo no puedo unstanciar una clase abstracta y se puede hacer de dos modos con una clase anonima o heredando
+
+
+\\\\\\\\\\\\\\\\\\\\\\ Se crea la clase ClaseAHija \\\\\\\\\\\\\\\\\\\\\\
+
+
+public class ClaseSHija extends ClaseA{
+
+@Override
+public void msg(){
+	System.out.print("Hola en abstracto...");
+	}
+}
+
+Esta es la clase concreta que si se puede instancias que hereda de "ClaseA"
+
+
+\\\\\\\\\\\\\\\\\\\\\\ Creamos otra clase llamada ClaseAHija2 \\\\\\\\\\\\\\\\\\\\\\
+
+public class ClaseAHija2 extends ClaseA{
+
+	@Override
+	public void msg();
+
+
+
+
+\\\\\\\\\\\\\\\\\\\\\\ En el programa03 \\\\\\\\\\\\\\\\\\\\\\
+
+Este es un ejemplo de como hacer una instancia a una clase concreta
+
+public static void main(String[] args){
+
+
+
+ClaseA= ca=null;
+
+ca=new ClaseHija();
+ca.imprimir();
+
+ca=new ClaseHija2();
+ca.imprimir();
+
+
+	}
+}
+
+
+¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬Y se puede hacer una clase anonima ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
+ */
+
+package org.uv.programa03;
+
+/**
+ *
+ * @author LilyE
+ */
+public class Programa03 {
+
+    public static void main(String[] args) {
+        
+//        ClaseConcreta c = new ClaseConcreta();
+//        c.imprimir();
+//        
+//        ClaseAHija cah = new ClaseAHija();
+//        cah.imprimir();
+//        
+//        ClaseAHija2 cah2 = new ClaseAHija2();
+//        cah2.imprimir();
+
+    ClaseA ca = null; 
+    
+    ca = new ClaseAHija();
+    ca.imprimir();
+    
+    ca = new ClaseAHija2();
+    ca.imprimir();
+    
+    //Clase anónima
+    ca=new ClaseA(){
+        @Override
+        public void msg() {
+            System.out.println("Clase anónima");
+        }
+    };
+    ca.imprimir();
+        
+    }
+}
+
+
+Ponerse al corriente de los apuntes del dia Viernes (17/02/23)
+
+
+Clase DAOEmpleado
+
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+
+
+Hacer el de Insertar el DELETE y todos los demas 
+
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+
+Crear una clase llamada HibernateUtil y poner el codigo 
+
+
+package org.uv.programa5.programa5;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class HibernateUtil {
+
+	private static final SessionFactory sessionFactory;
+
+    static {
+        try {
+            sessionFactory = new Configuration().configure().buildSessionFactory();
+        } catch (HibernateException ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static Session getSession() throws HibernateException {
+        return sessionFactory.openSession();
+    }
+
+    public static void shutdown() {
+        sessionFactory.close();
+    }
+}
+
+para que pueda funcionar debemos de cambiarle a nuestra paqueteria y 
+tambien a nuestro proyecto
+
+
+*********
+*********
+*********
+*********
+*********
+Vamos a agragar esto a la clase empleado 
+
+
+
+@Entity
+@Table(name = "Ejemplo")
+public class Empleado {
+    
+    @id
+    @GenerateValue(Strategy = Generation.IDENTITY)
+    @Column(name = "Clave")
+    private long clave;
+    
+
+--- Es la version de Hibernet la que debemos de tener 5.615 si es que trabajamos con la 
+version de java 11 (Compruebas con el cmd java -version) debes de yener el jdk de java 11
+
+
+--- Le damos en el proyecto click derecho y le damos BUILD y solito lo jala 
+
+---- En la clase Programa5
+
+------ Config 
+
+</session-factory>
+	<propiety name="hibernate connectio"> 
+
+############	Para el archivo XML en el apartado de files, creas una carpeta llamada xml y de ahi creas el 
+archivo XML y copias lo que viene en la pagina con el nombre "hibernate.cfg.xml""
+############
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/javaspringclub</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+         
+         <!-- add annotated resources here -->
+        <mapping class="com.javaspringclub.Employee"/>
+    </session-factory>
+</hibernate-configuration>
+
+
+
+
+								----------------------Clase del dia 27/02/23----------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Se hizo un sudo sudo a postgres 
+
+
+******   Hay un archivo donde le cambiamos la restriccion del elemento 
+
+
+******   Se ponen en modo trust (Local all y Local host)
+
+
+******   psql -hlocalhost -Upostgres 
+
+
+Se puede cambiar para las inicializaciones 
+
+
+
+
+
+					----------------------Clase del dia 27/02/23----------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+*TABLA
+<Venta> 
+
+PK Clave: Long
+Monto: double
+fecha: Date
+
+
+*TABLA
+<Detalle venta>
+
+PK Clave:
+Precio:
+Cantidad: 
+subtotal:
+Fk Clave Venta: 
+
+
+
+
+****************************************************************** CLASE DEL DIA 17/03/23 ****************************************************************** 
+
+
+Layout creat desing 
+
+
+
+Hacemos una clase llamada producto 
+
+y hacemos un pojo y lo tenemos que converti en entity
+
+@Entity
+@Table(name = "productos")
+public class Producto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "clave")
+    private long clave;
+    @Column(name = "nombre")
+    private String nombre;
+    @Column(name = "precio")
+    private double precio;
+
+    public long getClave() {
+        return clave;
+    }
+
+    public void setClave(long clave) {
+        this.clave = clave;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creamos un DAO 
+
+public class DAOProducto implements IDAOGeneral<Producto, Long>{
+
+@Override 
+piblic Producto create(Producto p){
+	Session session=HibernateUtil.getSession();
+	Transaction t=session.beginTransaction();
+	session.save(p);
+	t.commit();
+	session.close();
+	return p:
+}
+
+
+
+
+
+
+}
+
+
+
+en el boton de guardar 
+
+
+if(isNew){
+	Producto p=new Producto()
+	p.setNombre(txtNombre.getText());
+	double precio=Double.parseDouble(txtPrecio.getText());
+	p.setPrecio(precio);
+	daoPrecio.create(p);
+	JOptionPane.showMessageDialog(this, "Se guardo");
+}
+
+
+
+hacer el finId °°°°°°°°°°°°°°
+
+@Override
+public Producto findById(Long id){
+	Session session = HibernateUtil.getSession();
+	Transaction t= session.beginTransaction();
+	Producto p=session.get(Producto.class, id);
+	t.commit();
+	session.close():
+	return();
+
+
+
+hacer el findAll °°°°°°°°°°°°°°°°°°
+
+
+@Override
+public List<Producto>findALL(){
+	Session session = HibernateUtil.getSession();
+	Transaction t= session.beginTransaction();
+	List<Producto> lsProd=
+	session.createQuery("from producto", Producto.class).list();
+	t.commit();
+	session.close():
+	return lsProd;
+}
+
+
+
+hacer un findData
+
+
+
+----------------------------------------------Programa 07B 24/03/23--------------------------- 
+--------------------------------- --------------------------------- --------------------------------- 
+--------------------------------- --------------------------------- --------------------------------- 
+
+
+
+@Entity
+@Table(name = "productos")
+public class Producto{
+
+	@id
+	@GenerateValue(Strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private long id;
+	@Column(name = "nombre")
+	private String name;
+	@Column(name = "precio")
+	private double precio;
+
+Se agregan los setter and getters
+
+
+
+
+************************************Venta ************************************************
+******************************************************************************************
+
+
+@Entity
+@Table(name = "venta")
+public class vente{
+
+	@id
+	@GenerateValue(Strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private long idVenta;
+	@Column(name = "fecha")
+	private Date fecha;
+	@Column(name = "total")
+	private double total;
+	
+	OneToMany(mappeBy="Venta",fetch = FetchType.LAZY)
+	private Lis<DetalleVenta> detalleVenta;
+
+	public Venta(){
+	detalleVenta=new ArrayList<>()
+
+Se agregan los setter and getters
+
+
+
+************************************Detalle de Venta ************************************************
+************************************************************************************
+************************************************************************************
+
+@Entity
+@Table (name = "DetalleVenta")
+public class DetalleVenta{
+
+
+	@id
+	@GenerateValue(Strategy = GenerationType.IDENTITY)
+	@Column(name="id producto")
+	private long claveProducto;
+	@Column(name="cantidad")
+	private int cantidad;
+	@Column(name="precio")
+	private double precio;
+	@Column(name="nombre")
+	private string nombre;
+	@Column(name="descripcion")
+	private string descripcion;
+	@Column(name="subtotal")
+	private double subtotal;
+
+	@ManyToOne
+	@JoinColumn(name="venta_detalleventa", nulllable=false)
+	private venta venta;
+
+se agregan todos los getters and setters 
+
+}
+
+
+
+************************************ Crud con Spring ************************************************
+************************************************************************************
+************************************************************************************
+
+@PostMapping("/empleado")
+public DTOEmpleado creaEmpleado(@RequestBody DTOEmpleado empleado){
+DTOEmpleado emp=new DTOEmpleado();
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------  DELETE  -------------------------------------------------------
+
+@DeleteMapping ("/empleado")
+public void norrarEmpleado (@PathVariable Long id){
+	//Borrar 
+	return;
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------ MODIFICAR --------------------------------------------------------
+
+
+public DTOEmpleado modificarEmpleado (@PathVariable("id") Long id,
+	@Requestbody DTOEmpleado empleado){
+	//Mappeo
+	//Busacar id 
+	//Update
+	return empleado;
+}
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------ Hacer el repository --------------------------------------------------------
+
+
+** Hacer otro java class
+
+
+@Entity
+@Table(name = "empleado")
+public class Empleado{
+	@id
+	@GenerateValue(strategi )
+
+	private Long clave;
+	private String nombre;
+	private String direccion;
+	private 
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------ Hacer el repository empleado --------------------------------------------------------
+
+
+public interface RepositoryEmpleado extends CrudRepository<Empleado, Long>{
+
+
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------ Docker --------------------------------------------------------
+
+Vamos a bajar una imagen de postgres que sea la version 12 
+
+Despues en la terminal se pone...
+
+Linea para instala el postgres
+
+docker pull postgres:12
+
+Linea para crear un container 
+
+docker run --name mipostgres12 -e POSTGRES_PASWORD=postgres -d postgres:12
+
+
+---------------------------------------------- Docker 07 16/04/23 --------------------------------------------------------------------------------------------- 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1.- creamos una carpeta que se llame frontapp 
+
+2.- dentro de frontapp vamos a crear nuestro docker file 
+
+3.- Creamos un file llamado "Dockerfile" en el Visual Studio Code 
+
+4.- Descargar la version correcta de nodejs 
+
+3.- Con el comando docker build va a empezar a construir una imagen -------> docker buid -t uv/frontuv:1.0
+
+FROM node:10-alpine 
+
+5.- Se levanta el docker con el comando ----> docker run -d --name frontuv_container frontuv:2.0
+
+6.- vamos a trabajar con elementos de dockerfile 
+
+RUN mkdir -P /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir node:node /home/node/app/uvfiles && chown -R node:node /home/node/app/uvfiles
+
+7.- Volvemoa construir con el ---> docker build -t frontuv:1.0
+
+FROM node:10-alpine 
+RUN mkdir -P /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir node:node /home/node/app/uvfiles && chown -R node:node /home/node/app/uvfiles
+WORKDIR /home/node/app
+COPY Node.js ./
+USER node 
+RUN npm install 
+EXPOSE 8080
+CMD ["node", "."]
+
+
+8.- Creamos otro file llamado hello.html 
+
+9.- 
+
+
+
+
+
+
+
+
